@@ -1,4 +1,4 @@
-﻿@model PartyInvites.Models.GuestResponse
+﻿@model GuestResponse
 
 @{
     Layout = null;
@@ -10,39 +10,47 @@
 <head>
     <title>RSVP Form</title>
 
-    <link rel="stylesheet" href="/css/styles.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
-<div>
-    <form asp-action="RsvpForm" method="post">
-        <div asp-validation-summary="All"></div>
+    <main class="panel panel-success">
+        <div class="panel-heading text-center">
+            <h4>RSVP</h4>
+        </div>
 
-        <p>
-            <label asp-for="Name">Your name:</label>
-            <input asp-for="Name"/>
-        </p>
+        <div class="panel-body">
+            <form asp-action="RsvpForm" method="post">
+                <div asp-validation-summary="All"></div>
 
-        <p>
-            <label asp-for="Email">Your email:</label>
-            <input asp-for="Email"/>
-        </p>
+                <div class="form-group">
+                    <label asp-for="Name">Your name:</label>
+                    <input asp-for="Name" class="form-control" type="text" />
+                </div>
 
-        <p>
-            <label asp-for="Phone">Your phone:</label>
-            <input asp-for="Phone"/>
-        </p>
+                <div class="form-group">
+                    <label asp-for="Email">Your email:</label>
+                    <input asp-for="Email" class="form-control" type="email" />
+                </div>
 
-        <p>
-            <label>Will you attend?</label>
-            <select asp-for="WillAttend">
-                <option value="">Choose an option</option>
-                <option value="true">Yes, I'll be there</option>
-                <option value="false">No, I can't come</option>
-            </select>
-        </p>
+                <div class="form-group">
+                    <label asp-for="Phone">Your phone:</label>
+                    <input asp-for="Phone" class="form-control" type="tel" />
+                </div>
 
-        <button type="submit">Submit RSVP</button>
-    </form>
-</div>
+                <div class="form-group">
+                    <label>Will you attend?</label>
+                    <select asp-for="WillAttend" class="form-control">
+                        <option value="">Choose an option</option>
+                        <option value="true">Yes, I'll be there</option>
+                        <option value="false">No, I can't come</option>
+                    </select>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit">Submit RSVP</button>
+                </div>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

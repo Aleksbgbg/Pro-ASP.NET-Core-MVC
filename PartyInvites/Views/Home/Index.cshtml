@@ -7,12 +7,14 @@
 <html>
 <head>
     <title>Index</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
-<div>
-    Good @ViewBag.Greeting!
-    <p>We're going to have an exciting party.</p>
-    <a asp-action="RsvpForm">RSVP Now</a>
-</div>
+    <main class="text-center">
+        <h3>We're going to have an exciting party!</h3>
+        <h4>And you are invited</h4>
+        <a class="btn btn-primary" role="button" asp-action="RsvpForm">RSVP Now</a>
+    </main>
 </body>
 </html>
