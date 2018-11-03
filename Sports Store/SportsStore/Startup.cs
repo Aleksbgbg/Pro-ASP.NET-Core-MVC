@@ -4,10 +4,14 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
 
+    using SportsStore.Models;
+
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IProductRepository, ProductRepository>();
+
             services.AddMvc();
         }
 
