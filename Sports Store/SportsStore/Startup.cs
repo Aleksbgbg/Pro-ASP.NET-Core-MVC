@@ -23,7 +23,7 @@
                 app.UseStatusCodePages();
             }
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routeBuilder => routeBuilder.MapRoute("default", "{controller=Product}/{action=List}/{id?}"));
             app.UseStaticFiles();
         }
     }
