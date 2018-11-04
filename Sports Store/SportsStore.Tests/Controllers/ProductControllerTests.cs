@@ -5,15 +5,14 @@
 
     using Moq;
 
-    using NUnit.Framework;
-
     using SportsStore.Controllers;
     using SportsStore.Models;
 
-    [TestFixture]
-    internal class ProductControllerTests
+    using Xunit;
+
+    public class ProductControllerTests
     {
-        [Test]
+        [Fact]
         public void CanPaginate()
         {
             // Arrange
@@ -57,8 +56,8 @@
             // Assert
             Product[] products = result.ToArray();
 
-            Assert.That(products.Length, Is.EqualTo(1));
-            Assert.That(products[0].Name, Is.EqualTo("P5"));
+            Assert.True(products.Length == 1);
+            Assert.Equal("P5", products[0].Name);
         }
     }
 }
