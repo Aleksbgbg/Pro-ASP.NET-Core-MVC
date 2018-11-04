@@ -39,6 +39,9 @@
                 app.UseStatusCodePages();
             }
 
+            app.UseStaticFiles();
+            app.UseSession();
+
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.MapRoute(name: null,
@@ -78,9 +81,6 @@
 
                 routeBuilder.MapRoute("default", "{controller=Product}/{action=List}/{id?}");
             });
-
-            app.UseSession();
-            app.UseStaticFiles();
 
             Seed.EnsurePopulated(app);
         }
