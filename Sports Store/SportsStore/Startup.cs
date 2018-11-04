@@ -27,6 +27,8 @@
             services.AddTransient<IProductRepository, ProductRepository>();
 
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -76,6 +78,8 @@
 
                 routeBuilder.MapRoute("default", "{controller=Product}/{action=List}/{id?}");
             });
+
+            app.UseSession();
             app.UseStaticFiles();
 
             Seed.EnsurePopulated(app);
