@@ -37,7 +37,7 @@
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    ItemCount = _productRepository.Products.Count()
+                    ItemCount = targetProducts.Count()
                 },
                 CurrentCategory = category
             };
