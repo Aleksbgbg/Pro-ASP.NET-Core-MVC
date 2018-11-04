@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using SportsStore.Models;
+    using SportsStore.Models.ViewModels;
 
     public class ProductController : Controller
     {
@@ -19,10 +20,21 @@
 
         public ViewResult List(int page = 1)
         {
-            return View(_productRepository.Products
-                                          .OrderBy(product => product.Id)
-                                          .Skip((page - 1) * PageSize)
-                                          .Take(PageSize));
+            ProductsList productsList = new ProductsList
+            {
+                Products = _productRepository.Products
+                                             .OrderBy(product => product.Id)
+                                             .Skip((page - 1) * PageSize)
+                                             .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    ItemCount = _productRepository.Products.Count()
+                }
+            };
+
+            return View(productsList);
         }
     }
 }
