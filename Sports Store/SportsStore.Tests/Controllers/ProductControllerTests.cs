@@ -51,7 +51,7 @@
             ProductController controller = new ProductController(productRepositoryMock.Object);
 
             // Act
-            ProductsList result = (ProductsList)controller.List(2).ViewData.Model;
+            ProductsList result = (ProductsList)controller.List(page: 2).ViewData.Model;
 
             // Assert
             Product[] products = result.Products.ToArray();
@@ -98,7 +98,7 @@
             ProductController controller = new ProductController(productRepositoryMock.Object);
 
             // Act
-            ProductsList result = (ProductsList)controller.List(2).ViewData.Model;
+            ProductsList result = (ProductsList)controller.List(page: 2).ViewData.Model;
 
             // Assert
             PagingInfo pageInfo = result.PagingInfo;
