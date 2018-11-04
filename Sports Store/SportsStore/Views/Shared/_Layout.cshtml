@@ -15,7 +15,7 @@
         
         <div class="row panel">
             <div id="categories" class="col-3 my-3">
-                Put something useful here later
+                @await Component.InvokeAsync("NavigationMenu")
             </div>
             <div class="col-8">
                 @RenderBody()
