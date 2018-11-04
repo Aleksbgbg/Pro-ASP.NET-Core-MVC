@@ -1,6 +1,9 @@
 ﻿namespace SportsStore.Tests.Controllers
 {
+    using System;
     using System.Linq;
+
+    using Microsoft.AspNetCore.Mvc;
 
     using Moq;
 
@@ -158,6 +161,66 @@
             Assert.Equal(2, result.Length);
             Assert.True(result[0].Name == "P2" && result[0].Category == "Cat2");
             Assert.True(result[1].Name == "P4" && result[1].Category == "Cat2");
+        }
+
+        [Fact]
+        public void GenerateCategorySpecificProductCount()
+        {
+            // Arrange
+            Mock<IProductRepository> productRepositoryMock = new Mock<IProductRepository>();
+            productRepositoryMock.Setup(productRepository => productRepository.Products)
+                                 .Returns(new Product[]
+                                 {
+                                     new Product
+                                     {
+                                         Id = 1,
+                                         Name = "P1",
+                                         Category = "Cat1"
+                                     },
+                                     new Product
+                                     {
+                                         Id = 2,
+                                         Name = "P2",
+                                         Category = "Cat2"
+                                     },
+                                     new Product
+                                     {
+                                         Id = 3,
+                                         Name = "P3",
+                                         Category = "Cat1"
+                                     },
+                                     new Product
+                                     {
+                                         Id = 4,
+                                         Name = "P4",
+                                         Category = "Cat2"
+                                     },
+                                     new Product
+                                     {
+                                         Id = 5,
+                                         Name = "P5",
+                                         Category = "Cat3"
+                                     }
+                                 });
+
+            ProductController controller = new ProductController(productRepositoryMock.Object);
+
+            int? GetTotalItems(string category)
+            {
+                return ((ProductsList)controller.List(category)?.ViewData?.Model)?.PagingInfo.ItemCount;
+            }
+
+            // Act
+            int? category1Items = GetTotalItems("Cat1");
+            int? category2Items = GetTotalItems("Cat2");
+            int? category3Items = GetTotalItems("Cat3");
+            int? allCategoryItems = GetTotalItems(null);
+
+            // Assert
+            Assert.Equal(2, category1Items);
+            Assert.Equal(2, category2Items);
+            Assert.Equal(1, category3Items);
+            Assert.Equal(5, allCategoryItems);
         }
     }
 }
