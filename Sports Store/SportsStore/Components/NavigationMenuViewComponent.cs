@@ -17,6 +17,8 @@
 
         public IViewComponentResult Invoke()
         {
+            ViewBag.SelectedCategory = RouteData.Values["category"];
+
             return View(_productRepository.Products
                                           .Select(product => product.Category)
                                           .Distinct()
