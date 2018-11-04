@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Product>
+﻿@model ProductsList
 
-@foreach (Product product in Model)
+@foreach (Product product in Model.Products)
 {
     <div>
         <h3>@product.Name</h3>
