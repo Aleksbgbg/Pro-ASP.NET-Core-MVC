@@ -2,13 +2,7 @@
 
 @foreach (Product product in Model.Products)
 {
-    <div class="card card-body bg-light my-3">
-        <h3>
-            <strong>@product.Name</strong>
-            <span class="float-right badge badge-primary">@product.Price.ToString("C")</span>
-        </h3>
-        <span class="lead">@product.Description</span>
-    </div>
+    @await Html.PartialAsync("ProductSummary", product);
 }
 
 <div page-action="List" page-model="@Model.PagingInfo"
