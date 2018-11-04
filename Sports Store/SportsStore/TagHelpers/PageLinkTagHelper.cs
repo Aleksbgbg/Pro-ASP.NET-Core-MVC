@@ -26,6 +26,14 @@
 
         public string PageAction { get; set; }
 
+        public bool PageClassesEnabled { get; set; }
+
+        public string PageClass { get; set; }
+
+        public string PageClassNormal { get; set; }
+
+        public string PageClassSelected { get; set; }
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
@@ -40,6 +48,12 @@
                 {
                     Page = page
                 });
+
+                if (PageClassesEnabled)
+                {
+                    anchorTagBuilder.AddCssClass(PageClass);
+                    anchorTagBuilder.AddCssClass(page == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
+                }
 
                 anchorTagBuilder.InnerHtml.Append(page.ToString());
 

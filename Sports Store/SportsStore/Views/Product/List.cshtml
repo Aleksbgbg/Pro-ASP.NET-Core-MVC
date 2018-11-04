@@ -2,11 +2,17 @@
 
 @foreach (Product product in Model.Products)
 {
-    <div>
-        <h3>@product.Name</h3>
-        @product.Description
-        <h4>@product.Price.ToString("C")</h4>
+    <div class="card card-body bg-light my-3">
+        <h3>
+            <strong>@product.Name</strong>
+            <span class="float-right badge badge-primary">@product.Price.ToString("C")</span>
+        </h3>
+        <span class="lead">@product.Description</span>
     </div>
 }
 
-<div page-action="List" page-model="@Model.PagingInfo"></div>
+<div page-action="List" page-model="@Model.PagingInfo"
+     class="btn-group float-right"
+     page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-light"
+     page-class-selected="btn-primary"></div>
