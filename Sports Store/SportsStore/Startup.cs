@@ -37,7 +37,18 @@
                 app.UseStatusCodePages();
             }
 
-            app.UseMvc(routeBuilder => routeBuilder.MapRoute("default", "{controller=Product}/{action=List}/{id?}"));
+            app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.MapRoute("pagination",
+                                      "Products/Page{page}",
+                                      new
+                                      {
+                                              Controller = "Product",
+                                              Action = "List"
+                                      });
+
+                routeBuilder.MapRoute("default", "{controller=Product}/{action=List}/{id?}");
+            });
             app.UseStaticFiles();
 
             Seed.EnsurePopulated(app);
