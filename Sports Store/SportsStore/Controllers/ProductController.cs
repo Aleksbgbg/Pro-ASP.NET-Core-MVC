@@ -1,5 +1,6 @@
 ﻿namespace SportsStore.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
@@ -18,20 +19,27 @@
             _productRepository = productRepository;
         }
 
-        public ViewResult List(int page = 1)
+        public ViewResult List(string category = default, int page = 1)
         {
+            IEnumerable<Product> targetProducts = _productRepository.Products;
+
+            if (category != null)
+            {
+                targetProducts = targetProducts.Where(product => product.Category == category);
+            }
+
             ProductsList productsList = new ProductsList
             {
-                Products = _productRepository.Products
-                                             .OrderBy(product => product.Id)
-                                             .Skip((page - 1) * PageSize)
-                                             .Take(PageSize),
+                Products = targetProducts.OrderBy(product => product.Id)
+                                         .Skip((page - 1) * PageSize)
+                                         .Take(PageSize),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
                     ItemCount = _productRepository.Products.Count()
-                }
+                },
+                CurrentCategory = category
             };
 
             return View(productsList);
