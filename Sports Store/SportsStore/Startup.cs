@@ -39,12 +39,39 @@
 
             app.UseMvc(routeBuilder =>
             {
-                routeBuilder.MapRoute("pagination",
-                                      "Products/Page{page}",
-                                      new
+                routeBuilder.MapRoute(name: null,
+                                      template: "{category}/Page{page:int}",
+                                      defaults: new
                                       {
-                                              Controller = "Product",
-                                              Action = "List"
+                                          Controller = "Product",
+                                          Action = "List"
+                                      });
+
+                routeBuilder.MapRoute(name: null,
+                                      template: "Page{page:int}",
+                                      defaults: new
+                                      {
+                                          Controller = "Product",
+                                          Action = "List",
+                                          Page = 1
+                                      });
+
+                routeBuilder.MapRoute(name: null,
+                                      template: "{category}",
+                                      defaults: new
+                                      {
+                                          Controller = "Product",
+                                          Action = "List",
+                                          Page = 1
+                                      });
+
+                routeBuilder.MapRoute(name: null,
+                                      template: string.Empty,
+                                      defaults: new
+                                      {
+                                          Controller = "Product",
+                                          Action = "List",
+                                          Page = 1
                                       });
 
                 routeBuilder.MapRoute("default", "{controller=Product}/{action=List}/{id?}");
