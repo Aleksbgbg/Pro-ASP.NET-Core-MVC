@@ -4,7 +4,6 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using SportsStore.Extensions;
     using SportsStore.Models;
     using SportsStore.Models.ViewModels;
 
@@ -12,16 +11,19 @@
     {
         private readonly IProductRepository _productRepository;
 
-        public CartController(IProductRepository productRepository)
+        private readonly Cart _cart;
+
+        public CartController(IProductRepository productRepository, Cart cart)
         {
             _productRepository = productRepository;
+            _cart = cart;
         }
 
         public ViewResult Index(string returnUrl)
         {
             return View(new CartIndex
             {
-                Cart = GetCart(),
+                Cart = _cart,
                 ReturnUrl = returnUrl
             });
         }
@@ -33,9 +35,7 @@
 
             if (targetProduct != null)
             {
-                Cart cart = GetCart();
-                cart.AddItem(targetProduct, 1);
-                SaveCart(cart);
+                _cart.AddItem(targetProduct, 1);
             }
 
             return RedirectToAction("Index", new
@@ -51,25 +51,13 @@
 
             if (targetProduct != null)
             {
-                Cart cart = GetCart();
-                cart.RemoveLine(targetProduct);
-                SaveCart(cart);
+                _cart.RemoveLine(targetProduct);
             }
 
             return RedirectToAction("Index", new
             {
                 ReturnUrl = returnUrl
             });
-        }
-
-        private Cart GetCart()
-        {
-            return HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
-        }
-
-        private void SaveCart(Cart cart)
-        {
-            HttpContext.Session.SetJson("Cart", cart);
         }
     }
 }
