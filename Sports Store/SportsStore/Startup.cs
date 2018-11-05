@@ -26,6 +26,7 @@
             services.AddDbContext<SportsStoreDbContext>(options => options.UseSqlServer(_configuration["Data:SportsStoreProducts:ConnectionString"]));
 
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
             services.AddScoped<Cart>(SessionCart.Make);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
