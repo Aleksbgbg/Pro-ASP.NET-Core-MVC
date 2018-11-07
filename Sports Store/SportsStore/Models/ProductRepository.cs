@@ -1,6 +1,6 @@
 ﻿namespace SportsStore.Models
 {
-    using System.Collections.Generic;
+    using System.Linq;
 
     using SportsStore.Data;
 
@@ -13,6 +13,29 @@
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Product> Products => _dbContext.Products;
+        public IQueryable<Product> Products => _dbContext.Products;
+
+        public void SaveProduct(Product product)
+        {
+            if (product.Id == 0)
+            {
+                _dbContext.Products.Add(product);
+            }
+            else
+            {
+                Product targetProduct = _dbContext.Products
+                                                  .FirstOrDefault(dbProduct => dbProduct.Id == product.Id);
+
+                if (targetProduct != null)
+                {
+                    targetProduct.Name = product.Name;
+                    targetProduct.Description = product.Description;
+                    targetProduct.Price = product.Price;
+                    targetProduct.Category = product.Category;
+                }
+            }
+
+            _dbContext.SaveChanges();
+        }
     }
 }

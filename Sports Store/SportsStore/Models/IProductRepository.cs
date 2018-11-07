@@ -1,9 +1,11 @@
 ﻿namespace SportsStore.Models
 {
-    using System.Collections.Generic;
+    using System.Linq;
 
     public interface IProductRepository
     {
-        IEnumerable<Product> Products { get; }
+        IQueryable<Product> Products { get; }
+
+        void SaveProduct(Product product);
     }
 }
