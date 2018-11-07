@@ -47,5 +47,25 @@
             _cart.Clear();
             return View();
         }
+
+        public ViewResult List()
+        {
+            return View(_orderRepository.Orders.Where(order => !order.Shipped));
+        }
+
+        [HttpPost]
+        public IActionResult MarkShipped(int id)
+        {
+            Order targetOrder = _orderRepository.Orders
+                                                .FirstOrDefault(order => order.Id == id);
+
+            if (targetOrder != null)
+            {
+                targetOrder.Shipped = true;
+                _orderRepository.SaveOrder(targetOrder);
+            }
+
+            return RedirectToAction(nameof(List));
+        }
     }
 }
