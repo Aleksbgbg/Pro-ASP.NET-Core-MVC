@@ -1,5 +1,7 @@
 ﻿namespace SportsStore.Controllers
 {
+    using System.Linq;
+
     using Microsoft.AspNetCore.Mvc;
 
     using SportsStore.Models;
@@ -16,6 +18,12 @@
         public ViewResult Index()
         {
             return View(_productRepository.Products);
+        }
+
+        public ViewResult Edit(int id)
+        {
+            return View(_productRepository.Products
+                                          .FirstOrDefault(product => product.Id == id));
         }
     }
 }
