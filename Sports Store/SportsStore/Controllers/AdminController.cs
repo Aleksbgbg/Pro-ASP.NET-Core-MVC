@@ -25,5 +25,20 @@
             return View(_productRepository.Products
                                           .FirstOrDefault(product => product.Id == id));
         }
+
+        [HttpPost]
+        public IActionResult Edit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _productRepository.SaveProduct(product);
+
+                TempData["message"] = $"{product.Name} has been saved";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(product);
+        }
     }
 }
