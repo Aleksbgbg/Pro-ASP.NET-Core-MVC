@@ -15,6 +15,11 @@
             _productRepository = productRepository;
         }
 
+        public ViewResult Create()
+        {
+            return View(nameof(Edit), new Product());
+        }
+
         public ViewResult Index()
         {
             return View(_productRepository.Products);
