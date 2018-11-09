@@ -20,6 +20,19 @@
             return View(nameof(Edit), new Product());
         }
 
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            Product deletedProduct = _productRepository.DeleteProduct(id);
+
+            if (deletedProduct != null)
+            {
+                TempData["message"] = $"{deletedProduct.Name} was deleted";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public ViewResult Index()
         {
             return View(_productRepository.Products);
