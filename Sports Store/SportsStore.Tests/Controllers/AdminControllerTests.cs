@@ -174,6 +174,42 @@
             Assert.IsType<ViewResult>(result);
         }
 
+        [Fact]
+        public void CanDeleteValidProducts()
+        {
+            // Arrange
+            Product product = new Product
+            {
+                Id = 2,
+                Name = "Test"
+            };
+
+            Mock<IProductRepository> productRepositoryMock = new Mock<IProductRepository>();
+            productRepositoryMock.Setup(productRepository => productRepository.Products)
+                                 .Returns(new Product[]
+                                 {
+                                     new Product
+                                     {
+                                         Id = 1,
+                                         Name = "P1"
+                                     },
+                                     product,
+                                     new Product
+                                     {
+                                         Id = 3,
+                                         Name = "P3"
+                                     }
+                                 }.AsQueryable());
+
+            AdminController controller = new AdminController(productRepositoryMock.Object);
+
+            // Act
+            controller.Delete(product.Id);
+
+            // Assert
+            productRepositoryMock.Verify(productRepository => productRepository.DeleteProduct(product.Id));
+        }
+
         private static T GetViewModel<T>(IActionResult result) where T : class
         {
             return (result as ViewResult)?.ViewData.Model as T;
