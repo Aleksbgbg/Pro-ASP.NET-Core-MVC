@@ -37,5 +37,19 @@
 
             _dbContext.SaveChanges();
         }
+
+        public Product DeleteProduct(int id)
+        {
+            Product targetProduct = _dbContext.Products
+                                              .FirstOrDefault(product => product.Id == id);
+
+            if (targetProduct != null)
+            {
+                _dbContext.Products.Remove(targetProduct);
+                _dbContext.SaveChanges();
+            }
+
+            return targetProduct;
+        }
     }
 }
