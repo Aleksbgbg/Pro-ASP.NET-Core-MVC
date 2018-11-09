@@ -48,7 +48,7 @@
                                          Name = "P4",
                                          Category = "Oranges"
                                      },
-                                 });
+                                 }.AsQueryable());
 
             NavigationMenuViewComponent target = new NavigationMenuViewComponent(productRepositoryMock.Object);
 
@@ -81,7 +81,7 @@
                                          Name = "P2",
                                          Category = "Oranges"
                                      }
-                                 });
+                                 }.AsQueryable());
 
             NavigationMenuViewComponent target = new NavigationMenuViewComponent(productRepositoryMock.Object)
             {

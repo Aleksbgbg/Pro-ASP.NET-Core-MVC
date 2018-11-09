@@ -49,7 +49,7 @@
                                                  Id = 5,
                                                  Name = "P5"
                                          }
-                                 });
+                                 }.AsQueryable());
 
             ProductController controller = new ProductController(productRepositoryMock.Object);
 
@@ -96,7 +96,7 @@
                                                  Id = 5,
                                                  Name = "P5"
                                          }
-                                 });
+                                 }.AsQueryable());
 
             ProductController controller = new ProductController(productRepositoryMock.Object);
 
@@ -150,7 +150,7 @@
                                          Name = "P5",
                                          Category = "Cat3"
                                      }
-                                 });
+                                 }.AsQueryable());
 
             ProductController controller = new ProductController(productRepositoryMock.Object);
 
@@ -201,7 +201,7 @@
                                          Name = "P5",
                                          Category = "Cat3"
                                      }
-                                 });
+                                 }.AsQueryable());
 
             ProductController controller = new ProductController(productRepositoryMock.Object);
 
