@@ -4,6 +4,7 @@
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     using Moq;
 
@@ -121,6 +122,56 @@
 
             // Assert
             Assert.Null(result);
+        }
+
+        [Fact]
+        public void CanSaveValidChanges()
+        {
+            // Arrange
+            Mock<IProductRepository> productRepositoryMock = new Mock<IProductRepository>();
+            Mock<ITempDataDictionary> tempDataDictionaryMock = new Mock<ITempDataDictionary>();
+
+            AdminController controller = new AdminController(productRepositoryMock.Object)
+            {
+                TempData = tempDataDictionaryMock.Object
+            };
+
+            Product product = new Product
+            {
+                Name = "Test"
+            };
+
+            // Act
+            IActionResult result = controller.Edit(product);
+
+            // Assert
+            productRepositoryMock.Verify(productRepository => productRepository.SaveProduct(product));
+
+            Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", ((RedirectToActionResult)result).ActionName);
+        }
+
+        [Fact]
+        public void CannotSaveInvalidChanges()
+        {
+            // Arrange
+            Mock<IProductRepository> productRepositoryMock = new Mock<IProductRepository>();
+
+            AdminController controller = new AdminController(productRepositoryMock.Object);
+
+            Product product = new Product
+            {
+                Name = "Test"
+            };
+
+            controller.ModelState.AddModelError("error", "error");
+
+            // Act
+            IActionResult result = controller.Edit(product);
+
+            // Assert
+            productRepositoryMock.Verify(productRepository => productRepository.SaveProduct(It.IsAny<Product>()), Times.Never);
+            Assert.IsType<ViewResult>(result);
         }
 
         private static T GetViewModel<T>(IActionResult result) where T : class
