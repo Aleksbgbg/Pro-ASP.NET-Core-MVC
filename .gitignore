@@ -262,3 +262,6 @@ __pycache__/
 
 # ASP.NET Core static libraries
 lib/
+
+# Sensitive Production Credentials
+appsettings.production.json
