@@ -95,6 +95,7 @@
             });
 
             Seed.EnsurePopulated(app);
+            IdentitySeed.EnsurePopulated(app).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }
