@@ -2,6 +2,7 @@
 {
     using System.Linq;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using SportsStore.Models;
@@ -48,11 +49,13 @@
             return View();
         }
 
+        [Authorize]
         public ViewResult List()
         {
             return View(_orderRepository.Orders.Where(order => !order.Shipped));
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult MarkShipped(int id)
         {

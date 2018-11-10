@@ -2,10 +2,12 @@
 {
     using System.Linq;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using SportsStore.Models;
 
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IProductRepository _productRepository;
