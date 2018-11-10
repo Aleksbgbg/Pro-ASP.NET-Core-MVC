@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    using SportsStore.Data;
     using SportsStore.Models.ViewModels;
 
     using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -21,6 +22,8 @@
         {
             _userManager = userManager;
             _signInManager = signInManager;
+
+            IdentitySeed.EnsurePopulated(userManager).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         [AllowAnonymous]
