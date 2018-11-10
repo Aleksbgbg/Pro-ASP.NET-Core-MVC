@@ -9,9 +9,16 @@
     <title>@ViewBag.Title</title>
 </head>
 <body class="m-1 p-1">
-    <div class="bg-info p-2">
+<div class="bg-info p-2 row">
+    <div class="col">
         <h4>@ViewBag.title</h4>
     </div>
+    <div class="col-2">
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-sm btn-primary">
+            Log Out
+        </a>
+    </div>
+</div>
 
     @if (TempData["message"] != null)
     {
