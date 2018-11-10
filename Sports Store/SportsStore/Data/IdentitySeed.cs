@@ -14,14 +14,17 @@
 
         public static async Task EnsurePopulated(IApplicationBuilder app)
         {
-            UserManager<IdentityUser> userManager = app.ApplicationServices.GetRequiredService<UserManager<IdentityUser>>();
-
-            IdentityUser user = await userManager.FindByIdAsync(AdminName);
-
-            if (user == null)
+            using (IServiceScope serviceScope = app.ApplicationServices.CreateScope())
             {
-                user = new IdentityUser(AdminName);
-                await userManager.CreateAsync(user, AdminPassword);
+                UserManager<IdentityUser> userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+                IdentityUser user = await userManager.FindByIdAsync(AdminName);
+
+                if (user == null)
+                {
+                    user = new IdentityUser(AdminName);
+                    await userManager.CreateAsync(user, AdminPassword);
+                }
             }
         }
     }
