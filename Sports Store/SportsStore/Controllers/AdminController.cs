@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using SportsStore.Data;
     using SportsStore.Models;
 
     [Authorize]
@@ -59,6 +60,13 @@
             }
 
             return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult SeedDatabase()
+        {
+            Seed.EnsurePopulated(HttpContext.RequestServices);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
