@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,11 @@
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SportsStoreDbContext>(options => options.UseSqlServer(_configuration["Data:SportsStoreProducts:ConnectionString"]));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(_configuration["Data:SportsStoreIdentity:ConnectionString"]));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AppIdentityDbContext>()
+                    .AddDefaultTokenProviders();
 
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
@@ -46,6 +52,7 @@
 
             app.UseStaticFiles();
             app.UseSession();
+            app.UseAuthentication();
 
             app.UseMvc(routeBuilder =>
             {
