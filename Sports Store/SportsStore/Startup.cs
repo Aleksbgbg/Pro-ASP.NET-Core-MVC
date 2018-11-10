@@ -13,13 +13,11 @@
 
     public class Startup
     {
-        private readonly IConfigurationRoot _configuration;
+        private readonly IConfiguration _configuration;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            _configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
-                                                       .AddJsonFile("appsettings.json")
-                                                       .Build();
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -48,6 +46,10 @@
             {
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
             }
 
             app.UseStaticFiles();
@@ -94,8 +96,8 @@
                 routeBuilder.MapRoute("default", "{controller=Product}/{action=List}/{id?}");
             });
 
-            Seed.EnsurePopulated(app);
-            IdentitySeed.EnsurePopulated(app).ConfigureAwait(false).GetAwaiter().GetResult();
+            // Seed.EnsurePopulated(app);
+            // IdentitySeed.EnsurePopulated(app).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }
