@@ -1,0 +1,41 @@
+﻿@model UrlsAndRouting.Models.Target
+
+@{
+    Layout = null;
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Target</title>
+
+    <link rel="stylesheet" asp-href-include="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th scope="row">Controller</th>
+                <td>@Model.Controller</td>
+            </tr>
+            <tr>
+                <th scope="row">Method</th>
+                <td>@Model.Method</td>
+            </tr>
+
+            @foreach (KeyValuePair<string, string> keyValuePair in Model.Data)
+            {
+                <tr>
+                    <th scope="row">@keyValuePair.Key</th>
+                    <td>@keyValuePair.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
