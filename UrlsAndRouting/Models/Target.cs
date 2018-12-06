@@ -14,6 +14,6 @@
 
         public string Method { get; }
 
-        public Dictionary<string, string> Data { get; } = new Dictionary<string, string>();
+        public Dictionary<string, object> Data { get; } = new Dictionary<string, object>();
     }
 }

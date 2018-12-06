@@ -28,7 +28,7 @@
                 <td>@Model.Method</td>
             </tr>
 
-            @foreach (KeyValuePair<string, string> keyValuePair in Model.Data)
+            @foreach (KeyValuePair<string, object> keyValuePair in Model.Data)
             {
                 <tr>
                     <th scope="row">@keyValuePair.Key</th>
